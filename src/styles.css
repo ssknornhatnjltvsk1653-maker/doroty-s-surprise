@@ -238,3 +238,76 @@ main h2,
 main h3 {
   text-shadow: 0 2px 18px oklch(0.14 0.02 30 / 70%);
 }
+
+/* ── National Couple Day additions ─────────────────────────── */
+:root {
+  --gate-bg: radial-gradient(
+      120% 90% at 50% 12%,
+      oklch(0.28 0.06 20 / 0.9),
+      oklch(0.13 0.025 25 / 0.98) 72%
+    ),
+    linear-gradient(180deg, oklch(0.18 0.04 20), oklch(0.11 0.02 30));
+  --shadow-card: 0 24px 60px -28px oklch(0 0 0 / 65%),
+    0 0 40px -22px color-mix(in oklab, var(--rose) 60%, transparent);
+}
+
+.heart-shape,
+.heart-float {
+  background: radial-gradient(circle at 32% 30%, oklch(0.9 0.09 18), oklch(0.72 0.16 12));
+  -webkit-mask: var(--heart-mask);
+  mask: var(--heart-mask);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  pointer-events: none;
+}
+
+:root {
+  --heart-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M12 21s-8-4.9-8-10.5A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 8 3.5C20 16.1 12 21 12 21z'/%3E%3C/svg%3E");
+}
+
+.sparkle-shape {
+  border-radius: 999px;
+  background: oklch(0.95 0.05 80);
+  box-shadow: 0 0 12px 3px color-mix(in oklab, var(--gold) 60%, transparent);
+  pointer-events: none;
+}
+
+@keyframes heart-rise {
+  0% {
+    transform: translate3d(0, 105%, 0) scale(0.7);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--drift, 0px), -15%, 0) scale(1.05);
+    opacity: 0;
+  }
+}
+.heart-float {
+  bottom: 0;
+  animation-name: heart-rise;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+@utility card-premium {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(24px) saturate(140%);
+  box-shadow: var(--shadow-card);
+  border-radius: calc(var(--radius) - 0.5rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heart-float,
+  .sheen::after,
+  .animate-drift {
+    animation: none !important;
+  }
+}
